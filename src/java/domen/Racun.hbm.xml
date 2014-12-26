@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated Sep 16, 2014 3:44:38 PM by Hibernate Tools 3.6.0 -->
+<hibernate-mapping>
+    <class name="domen.Racun" table="racun" catalog="studentskasluzba">
+        <id name="racunId" type="int">
+            <column name="RacunID" />
+            <generator class="assigned" />
+        </id>
+        <many-to-one name="sluzbenik" class="domen.Sluzbenik" fetch="select">
+            <column name="Sluzbenik" length="3" not-null="true" />
+        </many-to-one>
+        <many-to-one name="student" class="domen.Student" fetch="select">
+            <column name="Student" length="13" />
+        </many-to-one>
+        <property name="datum" type="date">
+            <column name="Datum" length="10" not-null="true" />
+        </property>
+        <property name="ukupanIznos" type="double">
+            <column name="UkupanIznos" precision="22" scale="0" not-null="true" />
+        </property>
+        <list  name="stavkaracuns" table="stavkaracun" inverse="true" lazy="true" fetch="select">
+            
+            <key>
+                <column name="Racun" not-null="true" />
+            </key>
+            <list-index column="proizvod" />
+            <one-to-many class="domen.Stavkaracun" />
+        </list>
+    </class>
+</hibernate-mapping>

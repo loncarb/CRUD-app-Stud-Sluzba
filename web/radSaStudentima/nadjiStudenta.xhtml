@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <body>
+        <title>Nadji studenta</title>
+        <ui:composition template="/WEB-INF/template.xhtml">
+            <ui:define name="content">
+                <h:form id="pretraga">
+                    <h:outputText value="JMBG:"/>
+                    <h:inputText value="#{vratiSveStudenteMB.studentZaPretragu.jmbg}" />
+
+                    <h:outputText value="Ime:"/>
+                    <h:inputText value="#{vratiSveStudenteMB.studentZaPretragu.ime}" />
+
+                    <h:outputText value="Prezime:"/>
+                    <h:inputText value="#{vratiSveStudenteMB.studentZaPretragu.prezime}" />
+
+                    <h:outputText value="Mesto:"/>
+                    <p:selectOneMenu value="#{vratiSveStudenteMB.studentZaPretragu.mesto}" 
+                                     converter="konvMesto">
+                        <f:selectItems value="#{vratiSveStudenteMB.listaMesta}" 
+                                       var="mesto"
+                                       itemLabel="#{mesto.naziv}"
+                                       itemValue="#{mesto}"/>
+                    </p:selectOneMenu>
+                    
+                    <p:commandButton value="Pretraga" ajax="false" 
+                                     action="#{vratiSveStudenteMB.nadjiStudenta()}" >
+                                
+                            </p:commandButton>
+                </h:form>
+                <h:form id="frmNadjiStudenta" >
+                    <p:dataTable value="#{vratiSveStudenteMB.lista}" var="student" 
+                                 selection="#{vratiSveStudenteMB.studentZaizmenu}" 
+                                 rowKey="#{student.jmbg}" selectionMode="single"        
+                                 >
+                        <p:column headerText="Ime">
+                            #{student.ime}
+                        </p:column>
+                        <p:column headerText="Prezime">
+                            #{student.prezime}
+                        </p:column>
+                        <p:column headerText="JMBG">
+                            #{student.jmbg}
+                        </p:column>
+                        <p:column headerText="Broj indeksa">
+                            #{student.brIndeksa}
+                        </p:column>
+                        <p:column headerText="Ulica">
+                            #{student.ulica}
+                        </p:column>
+                        <p:column headerText="Broj">
+                            #{student.broj}
+                        </p:column>
+                        <p:column headerText="Mesto">
+                            #{student.mesto}
+                        </p:column>
+                        <p:column headerText="operacija">
+                            <p:commandButton value="Izmeni" ajax="false"
+                                             action="#{vratiSveStudenteMB.izmeniStudenta()}" >
+                                <f:setPropertyActionListener target="#{vratiSveStudenteMB.studentZaizmenu}" 
+                                                             value="#{student}" />
+                            </p:commandButton>
+
+                        </p:column>
+                        <f:facet name="footer">
+                            <p:commandButton value="Obrisi" ajax="false"
+                                             action="#{vratiSveStudenteMB.obrisiStudenta()}"/>
+                            <p:commandButton value="Prijavi ispite" ajax="false"
+                                             action="#{vratiSveStudenteMB.prijaviIspite()}"/>
+                            <p:commandButton value="Prikazi polozene ispite" ajax="false"
+                                             action="#{vratiSveStudenteMB.polozeniIspiti()}"/>
+
+                        </f:facet>
+                    </p:dataTable>
+                </h:form>
+            </ui:define>
+        </ui:composition>
+    </body>
+</html>

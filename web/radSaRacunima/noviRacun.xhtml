@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <body>
+        <ui:composition template="/WEB-INF/template.xhtml">
+            <ui:define name="content">
+                <h:form id="frmNoviRacun" >
+                    <h:panelGrid id="pnglRacun"  columns="2">
+                        <h:outputText value="Broj racuna:"/>
+                        <h:inputText value="#{racunMB.tekuciRacun.racunId}" />
+
+                        <h:outputText value="JMBG:" />
+                        <h:inputText value="#{racunMB.tekuciStudent.jmbg}" />
+
+                        <h:outputText value="Datum:"/>
+                        <h:inputText value="#{racunMB.tekuciRacun.datum}">
+                            <f:convertDateTime pattern="yyyy-MM-dd" />
+                        </h:inputText>
+                    </h:panelGrid>
+
+                    <h:panelGrid id="pnglTabela"  columns="2">
+                        <p:dataTable value="#{racunMB.tekuciRacun.stavkaracuns}" var="stavkaRacuna" 
+                                     selection="#{racunMB.stavkaRacuna}" 
+                                     rowKey="#{stavkaRacuna.id.stavkaRacunaId}" selectionMode="single"      
+                                     >
+                            <p:column headerText="RB">
+                                #{stavkaRacuna.id.stavkaRacunaId}
+                            </p:column>
+                            <p:column headerText="Proizvod">
+                                #{stavkaRacuna.proizvod.naziv}
+                            </p:column>
+                            
+                            <p:column headerText="Cena">
+                                #{stavkaRacuna.cena}
+                            </p:column>
+                            
+                        </p:dataTable>
+                        <p:commandButton value="Obrisi" ajax="false"
+                                         action="#{racunMB.obrisiStavku()}"/>
+                    </h:panelGrid>                    
+
+                    <h:panelGrid id="pnglInfo"  columns="3" >
+                        <h:outputText value="Ukupan iznos:"/>
+                        <h:inputText value="#{racunMB.tekuciRacun.ukupanIznos}" />
+
+                        <p:commandButton value="Sacuvaj racun" ajax="false"
+                                         action="#{racunMB.sacuvajRacun()}"/>
+                    </h:panelGrid>
+
+                    <h:outputText value="Izaberite proizvod:"/>
+                    <h:panelGrid id="pnglProizvod"  columns="3" >
+                        <p:selectOneMenu value="#{racunMB.novaStavkaracun.proizvod}" 
+                                         converter="konvProizvod">
+                            <f:selectItems value="#{racunMB.listaProizvoda}" 
+                                           var="proizvod"
+                                           itemLabel="#{proizvod.naziv}"
+                                           itemValue="#{proizvod}"/>
+                        </p:selectOneMenu>
+                        
+
+                        <p:commandButton value="Ubaci na racun" ajax="true" update="@form"
+                                         action="#{racunMB.ubaciStavku()}"/>
+                    </h:panelGrid>
+
+                </h:form>
+            </ui:define>
+        </ui:composition>
+    </body>
+</html>

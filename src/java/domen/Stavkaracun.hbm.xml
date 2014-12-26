@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated Sep 16, 2014 3:44:38 PM by Hibernate Tools 3.6.0 -->
+<hibernate-mapping>
+    <class name="domen.Stavkaracun" table="stavkaracun" catalog="studentskasluzba">
+        <composite-id name="id" class="domen.StavkaracunId">
+            <key-property name="stavkaRacunaId" type="int">
+                <column name="StavkaRacunaID" />
+            </key-property>
+            <key-property name="racun" type="int">
+                <column name="Racun" />
+            </key-property>
+        </composite-id>
+        <many-to-one name="racun" class="domen.Racun" update="false" insert="false" fetch="select">
+            <column name="Racun" not-null="true" />
+        </many-to-one>
+        <many-to-one name="proizvod" class="domen.Proizvod" fetch="select">
+            <column name="Proizvod" not-null="true" />
+        </many-to-one>
+        <property name="cena" type="double">
+            <column name="Cena" precision="22" scale="0" not-null="true" />
+        </property>
+        <property name="kolicina" type="int">
+            <column name="Kolicina" not-null="true" />
+        </property>
+        <property name="iznosNaStavci" type="double">
+            <column name="IznosNaStavci" precision="22" scale="0" not-null="true" />
+        </property>
+    </class>
+</hibernate-mapping>

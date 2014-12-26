@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <body>
+        <title> Novi student </title>
+        <ui:composition template="/WEB-INF/template.xhtml">
+            <ui:define name="content">
+                <h:form id="frmNoviStudent" >
+                    <h:panelGrid id="pnlgIzmena"  columns="2">
+                        <h:outputText value="Ime:"/>
+                        <h:inputText value="#{studentMB.noviStudent.ime}" />
+
+                        <h:outputText value="Prezime:"/>
+                        <h:inputText value="#{studentMB.noviStudent.prezime}" />
+
+                        <h:outputText value="JMBG:"/>
+                        <h:inputText value="#{studentMB.noviStudent.jmbg}" />
+
+                        <h:outputText value="Broj indeksa:"/>
+                        <h:inputText value="#{studentMB.noviStudent.brIndeksa}" />
+
+                        <h:outputText value="Ulica:"/>
+                        <h:inputText value="#{studentMB.noviStudent.ulica}" />
+
+                        <h:outputText value="Broj:"/>
+                        <h:inputText value="#{studentMB.noviStudent.broj}" />
+
+                        <p:selectOneMenu value="#{studentMB.noviStudent.mesto}" 
+                                         converter="konvMesto">
+                            <f:selectItems value="#{studentMB.listaMesta}" 
+                                           var="mesto"
+                                           itemLabel="#{mesto.naziv}"
+                                           itemValue="#{mesto}"/>
+                        </p:selectOneMenu>
+
+                        <h:commandButton value="Sacuvaj studenta" action="#{studentMB.sacuvajStudenta()}"/>
+                    </h:panelGrid>
+
+
+
+
+
+                </h:form>
+            </ui:define>
+        </ui:composition>
+    </body>
+</html>
